@@ -9,6 +9,8 @@ import android.widget.RelativeLayout;
 
 import androidx.lifecycle.ViewModelProviders;
 
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -22,6 +24,7 @@ import net.spacive.mapapp.viewmodel.MapViewModel;
 public class MapFragment extends SupportMapFragment {
 
     private GoogleMap googleMap;
+    private MapViewModel viewModel;
 
     @Override
     public View onCreateView(LayoutInflater layoutInflater, ViewGroup viewGroup, Bundle bundle) {
@@ -57,14 +60,19 @@ public class MapFragment extends SupportMapFragment {
 
         this.googleMap = googleMap;
 
-        MapViewModel viewModel = ViewModelProviders.of(getActivity()).get(MapViewModel.class);
+        setMarkerClickListener();
+
+        viewModel = ViewModelProviders.of(getActivity()).get(MapViewModel.class);
 
         for (LocationModel location : viewModel.getLocations()) {
             addMarker(location);
         }
 
         viewModel.getCurrentLocation().observe(getViewLifecycleOwner(), this::addMarker);
+        viewModel.getFocusedLocation().observe(getViewLifecycleOwner(), this::changeFocusToLocation);
+    }
 
+    private void setMarkerClickListener() {
         googleMap.setOnMarkerClickListener(marker -> {
             LocationModel location = (LocationModel) marker.getTag();
             if (location != null) {
@@ -91,9 +99,17 @@ public class MapFragment extends SupportMapFragment {
     }
 
     private void attachArrowClickListeners(View view) {
-        view.findViewById(R.id.arrowLeft).setOnClickListener(view1 -> Log.d("CLICK", "LEFT"));
-        view.findViewById(R.id.arrowRight).setOnClickListener(view1 -> Log.d("CLICK", "RIGHT"));
-        view.findViewById(R.id.arrowUp).setOnClickListener(view1 -> Log.d("CLICK", "UP"));
-        view.findViewById(R.id.arrowDown).setOnClickListener(view1 -> Log.d("CLICK", "DOWN"));
+        view.findViewById(R.id.arrowLeft).setOnClickListener(v -> viewModel.setMostWesternPosition());
+        view.findViewById(R.id.arrowRight).setOnClickListener(v -> viewModel.setMostEasternPosition());
+        view.findViewById(R.id.arrowUp).setOnClickListener(v -> viewModel.setMostNorthernPosition());
+        view.findViewById(R.id.arrowDown).setOnClickListener(v -> viewModel.setMostSouthernPosition());
+    }
+
+    private void changeFocusToLocation(LocationModel location) {
+        if (location != null) {
+            LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(latLng);
+            googleMap.moveCamera(cameraUpdate);
+        }
     }
 }

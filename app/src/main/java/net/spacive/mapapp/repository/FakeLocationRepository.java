@@ -18,6 +18,9 @@ public class FakeLocationRepository implements LocationRepository {
     private MutableLiveData<LocationModel> currentLocation = new MutableLiveData<>();
 
     private FakeLocationRepository() {
+
+        currentLocation.setValue(new LocationModel(10, 10, 0, ""));
+
         allLocations.add(new LocationModel(0, 0, 0, ""));
         allLocations.add(new LocationModel(0, 1, 0, ""));
         allLocations.add(new LocationModel(0, 2, 0, ""));
@@ -45,6 +48,11 @@ public class FakeLocationRepository implements LocationRepository {
         return allLocations;
     }
 
+    private synchronized void addLocation(LocationModel locationModel) {
+        currentLocation.postValue(locationModel);
+        allLocations.add(locationModel);
+    }
+
     private void startDataStream() {
         if (streamStarted)
         {
@@ -56,13 +64,14 @@ public class FakeLocationRepository implements LocationRepository {
         new Thread(() -> {
             for (int i = 0; i < 1000; i++) {
 
-                currentLocation.postValue(new LocationModel(i,i,0,""));
-
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+
+                LocationModel newModel = new LocationModel(i,i,0,"");
+                addLocation(newModel);
             }
             streamStarted = false;
         }).start();
