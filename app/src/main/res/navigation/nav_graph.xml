@@ -28,8 +28,9 @@
             android:id="@+id/action_statsFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
     </fragment>
-    <fragment android:id="@+id/mapFragment"
-        android:name="com.google.android.gms.maps.SupportMapFragment">
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="net.spacive.mapapp.MapFragment">
         <action
             android:id="@+id/action_mapFragment_to_statsFragment"
             app:destination="@id/statsFragment" />
