@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProviders;
 
 import static android.text.format.DateFormat.getTimeFormat;
 
@@ -16,6 +17,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import net.spacive.mapapp.R;
 import net.spacive.mapapp.databinding.BottomSheetMarkerInfoBinding;
 import net.spacive.mapapp.model.LocationModel;
+import net.spacive.mapapp.viewmodel.LocationDetailViewModel;
 
 import java.text.Format;
 
@@ -23,10 +25,6 @@ public class LocationDetailDialog extends BottomSheetDialogFragment {
 
     private LocationModel locationModel;
     private Format timeFormat;
-
-    public LocationDetailDialog(LocationModel locationModel) {
-        this.locationModel = locationModel;
-    }
 
     @Nullable
     @Override
@@ -36,6 +34,9 @@ public class LocationDetailDialog extends BottomSheetDialogFragment {
                 R.layout.bottom_sheet_marker_info,
                 container,
                 false);
+
+        LocationDetailViewModel viewModel = ViewModelProviders.of(getActivity()).get(LocationDetailViewModel.class);
+        locationModel = viewModel.getLocationModel();
 
         timeFormat = getTimeFormat(getContext());
 

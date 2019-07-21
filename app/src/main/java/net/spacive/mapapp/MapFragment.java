@@ -20,6 +20,7 @@ import com.google.android.gms.maps.model.PolylineOptions;
 
 import net.spacive.mapapp.model.LocationModel;
 import net.spacive.mapapp.view.LocationDetailDialog;
+import net.spacive.mapapp.viewmodel.LocationDetailViewModel;
 import net.spacive.mapapp.viewmodel.MapViewModel;
 
 import java.util.ArrayList;
@@ -132,8 +133,9 @@ public class MapFragment extends SupportMapFragment {
     }
 
     private void showBottomSheet(LocationModel location) {
-        LocationDetailDialog dialog = new LocationDetailDialog(location);
-        dialog.show(getFragmentManager(), LocationDetailDialog.class.getName());
+        LocationDetailViewModel viewModel = ViewModelProviders.of(getActivity()).get(LocationDetailViewModel.class);
+        viewModel.setLocationModel(location);
+        new LocationDetailDialog().show(getFragmentManager(), LocationDetailDialog.class.getName());
     }
 
     private void attachArrowClickListeners(View view) {
