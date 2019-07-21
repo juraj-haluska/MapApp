@@ -15,6 +15,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 import net.spacive.mapapp.model.LocationModel;
 import net.spacive.mapapp.view.LocationDetailDialog;
@@ -28,6 +30,7 @@ public class MapFragment extends SupportMapFragment {
     private GoogleMap googleMap;
     private MapViewModel viewModel;
     private List<Marker> markers = new ArrayList<>();
+    private Polyline polyline;
 
 
     @Override
@@ -90,6 +93,7 @@ public class MapFragment extends SupportMapFragment {
             }
 
             updateMarkers(locations);
+            updatePolyline(latLngs);
         }
     }
 
@@ -109,6 +113,21 @@ public class MapFragment extends SupportMapFragment {
                 marker.setTag(locationModel);
                 markers.add(marker);
             }
+        }
+    }
+
+    private void updatePolyline(List<LatLng> latLngs) {
+        if (polyline == null) {
+            // generate polyline options
+            PolylineOptions polylineOptions = new PolylineOptions();
+            for (LatLng latLng : latLngs) {
+                // add polyline
+                polylineOptions.add(latLng);
+            }
+
+            polyline = googleMap.addPolyline(polylineOptions);
+        } else {
+            polyline.setPoints(latLngs);
         }
     }
 
