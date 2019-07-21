@@ -23,15 +23,10 @@ public class MapViewModel extends ViewModel {
         locationRepository = FakeLocationRepository.getInstance();
 
         focusedLocation = new MutableLiveData<>();
-        focusedLocation.setValue(locationRepository.getCurrentLocation().getValue());
     }
 
-    public List<LocationModel> getLocations() {
-        return locationRepository.getAllLocations();
-    }
-
-    public LiveData<LocationModel> getCurrentLocation() {
-        return locationRepository.getCurrentLocation();
+    public LiveData<List<LocationModel>> getLocations() {
+        return locationRepository.getLocations();
     }
 
     public MutableLiveData<LocationModel> getFocusedLocation() {
@@ -40,28 +35,28 @@ public class MapViewModel extends ViewModel {
 
     public void setMostEasternPosition() {
         Comparator<LocationModel> comparator = Comparators.getLocationComparator(LocationModel::getLongitude);
-        LocationModel mostEastern = Collections.max(locationRepository.getAllLocations(), comparator);
+        LocationModel mostEastern = Collections.max(locationRepository.getLocations().getValue(), comparator);
 
         focusedLocation.setValue(mostEastern);
     }
 
     public void setMostWesternPosition() {
         Comparator<LocationModel> comparator = Comparators.getLocationComparator(LocationModel::getLongitude);
-        LocationModel mostWestern = Collections.min(locationRepository.getAllLocations(), comparator);
+        LocationModel mostWestern = Collections.min(locationRepository.getLocations().getValue(), comparator);
 
         focusedLocation.setValue(mostWestern);
     }
 
     public void setMostNorthernPosition() {
         Comparator<LocationModel> comparator = Comparators.getLocationComparator(LocationModel::getLatitude);
-        LocationModel mostNorthern = Collections.max(locationRepository.getAllLocations(), comparator);
+        LocationModel mostNorthern = Collections.max(locationRepository.getLocations().getValue(), comparator);
 
         focusedLocation.setValue(mostNorthern);
     }
 
     public void setMostSouthernPosition() {
         Comparator<LocationModel> comparator = Comparators.getLocationComparator(LocationModel::getLatitude);
-        LocationModel mostSouthern = Collections.min(locationRepository.getAllLocations(), comparator);
+        LocationModel mostSouthern = Collections.min(locationRepository.getLocations().getValue(), comparator);
 
         focusedLocation.setValue(mostSouthern);
     }

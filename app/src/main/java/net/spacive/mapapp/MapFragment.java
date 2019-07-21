@@ -20,10 +20,15 @@ import net.spacive.mapapp.model.LocationModel;
 import net.spacive.mapapp.view.LocationDetailDialog;
 import net.spacive.mapapp.viewmodel.MapViewModel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MapFragment extends SupportMapFragment {
 
     private GoogleMap googleMap;
     private MapViewModel viewModel;
+    private List<Marker> markers = new ArrayList<>();
+
 
     @Override
     public View onCreateView(LayoutInflater layoutInflater, ViewGroup viewGroup, Bundle bundle) {
@@ -56,18 +61,13 @@ public class MapFragment extends SupportMapFragment {
     }
 
     private void onMapLoaded(GoogleMap googleMap) {
-
         this.googleMap = googleMap;
 
         setMarkerClickListener();
 
         viewModel = ViewModelProviders.of(getActivity()).get(MapViewModel.class);
 
-        for (LocationModel location : viewModel.getLocations()) {
-            addMarker(location);
-        }
-
-        viewModel.getCurrentLocation().observe(getViewLifecycleOwner(), this::addMarker);
+        viewModel.getLocations().observe(getViewLifecycleOwner(), this::updateLocations);
         viewModel.getFocusedLocation().observe(getViewLifecycleOwner(), this::changeFocusToLocation);
     }
 
@@ -82,14 +82,33 @@ public class MapFragment extends SupportMapFragment {
         });
     }
 
-    private void addMarker(LocationModel location) {
+    private void updateLocations(List<LocationModel> locations) {
         if (googleMap != null) {
+            List<LatLng> latLngs = new ArrayList<>();
+            for (LocationModel location : locations) {
+                latLngs.add(location.getLatLng());
+            }
 
-            MarkerOptions options = new MarkerOptions()
-                    .position(new LatLng(location.getLatitude(), location.getLongitude()));
+            updateMarkers(locations);
+        }
+    }
 
-            Marker marker = googleMap.addMarker(options);
-            marker.setTag(location);
+    private void updateMarkers(List<LocationModel> locations) {
+        for (LocationModel locationModel : locations) {
+            // check if marker of this location is in map
+            boolean contains = false;
+            for (Marker marker : markers) {
+                if (locationModel.getLatLng().equals(marker.getPosition())) {
+                    contains = true;
+                }
+            }
+
+            if (!contains) {
+                MarkerOptions options = new MarkerOptions().position(locationModel.getLatLng());
+                Marker marker = googleMap.addMarker(options);
+                marker.setTag(locationModel);
+                markers.add(marker);
+            }
         }
     }
 

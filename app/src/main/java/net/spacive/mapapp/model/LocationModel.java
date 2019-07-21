@@ -1,5 +1,7 @@
 package net.spacive.mapapp.model;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.Date;
 
 public class LocationModel {
@@ -35,5 +37,9 @@ public class LocationModel {
 
     public float getAccuracy() {
         return accuracy;
+    }
+
+    public LatLng getLatLng() {
+        return new LatLng(latitude, longitude);
     }
 }

@@ -1,5 +1,7 @@
 package net.spacive.mapapp.repository;
 
+import android.os.AsyncTask;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -16,18 +18,18 @@ public class FakeLocationRepository implements LocationRepository {
 
     private boolean streamStarted = false;
 
-    private List<LocationModel> allLocations = new ArrayList<>();
-    private MutableLiveData<LocationModel> currentLocation = new MutableLiveData<>();
+    private List<LocationModel> locationCollection = new ArrayList<>();
+    private MutableLiveData<List<LocationModel>> locations = new MutableLiveData<>();
 
     private FakeLocationRepository() {
 
-        currentLocation.setValue(new LocationModel(10, 10, new Date(Calendar.getInstance().getTimeInMillis()), "", 5));
+        locationCollection.add(new LocationModel(Double.MIN_NORMAL, 0, new Date(Calendar.getInstance().getTimeInMillis()), "", 5));
+        locationCollection.add(new LocationModel(0, 1, new Date(Calendar.getInstance().getTimeInMillis()), "", 5));
+        locationCollection.add(new LocationModel(0, 2, new Date(Calendar.getInstance().getTimeInMillis()), "", 5));
+        locationCollection.add(new LocationModel(0, 3, new Date(Calendar.getInstance().getTimeInMillis()), "", 5));
+        locationCollection.add(new LocationModel(0, 4, new Date(Calendar.getInstance().getTimeInMillis()), "", 5));
 
-        allLocations.add(new LocationModel(Double.MIN_NORMAL, 0, new Date(Calendar.getInstance().getTimeInMillis()), "", 5));
-        allLocations.add(new LocationModel(0, 1, new Date(Calendar.getInstance().getTimeInMillis()), "", 5));
-        allLocations.add(new LocationModel(0, 2, new Date(Calendar.getInstance().getTimeInMillis()), "",5 ));
-        allLocations.add(new LocationModel(0, 3, new Date(Calendar.getInstance().getTimeInMillis()), "", 5));
-        allLocations.add(new LocationModel(0, 4, new Date(Calendar.getInstance().getTimeInMillis()), "", 5));
+        locations.setValue(locationCollection);
 
         startDataStream();
     }
@@ -41,41 +43,43 @@ public class FakeLocationRepository implements LocationRepository {
     }
 
     @Override
-    public LiveData<LocationModel> getCurrentLocation() {
-        return currentLocation;
-    }
-
-    @Override
-    public List<LocationModel> getAllLocations() {
-        return allLocations;
-    }
-
-    private synchronized void addLocation(LocationModel locationModel) {
-        currentLocation.postValue(locationModel);
-        allLocations.add(locationModel);
+    public LiveData<List<LocationModel>> getLocations() {
+        return locations;
     }
 
     private void startDataStream() {
-        if (streamStarted)
-        {
+        if (streamStarted) {
             return;
         }
 
         streamStarted = true;
 
-        new Thread(() -> {
-            for (int i = 0; i < 1000; i++) {
-
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+        new AsyncTask<Void, LocationModel, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                for (int i = 0; i < 20; i++) {
+                    try {
+                        Thread.sleep(1000);
+                        LocationModel newModel = new LocationModel(
+                                i,
+                                i,
+                                new Date(Calendar.getInstance().getTimeInMillis()),
+                                "zdroj: " + i,
+                                5
+                        );
+                        publishProgress(newModel);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
-
-                LocationModel newModel = new LocationModel(i,i,new Date(Calendar.getInstance().getTimeInMillis()),"zdroj: " + i, 5);
-                addLocation(newModel);
+                return null;
             }
-            streamStarted = false;
-        }).start();
+
+            @Override
+            protected void onProgressUpdate(LocationModel... values) {
+                locationCollection.add(values[0]);
+                locations.postValue(locationCollection);
+            }
+        }.execute();
     }
 }

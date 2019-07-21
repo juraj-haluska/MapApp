@@ -7,7 +7,5 @@ import net.spacive.mapapp.model.LocationModel;
 import java.util.List;
 
 public interface LocationRepository {
-    LiveData<LocationModel> getCurrentLocation();
-
-    List<LocationModel> getAllLocations();
+    LiveData<List<LocationModel>> getLocations();
 }
