@@ -4,7 +4,9 @@
     <string name="title_map">Map</string>
     <string name="title_stats">Statistics</string>
     <string name="title_settings">Settings</string>
-
+    <string name="title_location_details">Location details</string>
+    <string name="title_accuracy">Accuracy:</string>
+    <string name="title_source">Source:</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
