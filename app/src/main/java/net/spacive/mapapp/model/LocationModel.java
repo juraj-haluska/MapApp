@@ -1,16 +1,20 @@
 package net.spacive.mapapp.model;
 
+import java.util.Date;
+
 public class LocationModel {
     private double latitude;
     private double longitude;
-    private long timestamp;
+    private Date date;
     private String source;
+    private float accuracy;
 
-    public LocationModel(double latitude, double longitude, long timestamp, String source) {
+    public LocationModel(double latitude, double longitude, Date date, String source, float accuracy) {
         this.latitude = latitude;
         this.longitude = longitude;
-        this.timestamp = timestamp;
+        this.date = date;
         this.source = source;
+        this.accuracy = accuracy;
     }
 
     public double getLatitude() {
@@ -21,11 +25,15 @@ public class LocationModel {
         return longitude;
     }
 
-    public long getTimestamp() {
-        return timestamp;
+    public Date getDate() {
+        return date;
     }
 
     public String getSource() {
         return source;
+    }
+
+    public float getAccuracy() {
+        return accuracy;
     }
 }

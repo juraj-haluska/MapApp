@@ -1,7 +1,6 @@
 package net.spacive.mapapp;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +15,9 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.material.snackbar.Snackbar;
 
 import net.spacive.mapapp.model.LocationModel;
+import net.spacive.mapapp.view.LocationDetailDialog;
 import net.spacive.mapapp.viewmodel.MapViewModel;
 
 public class MapFragment extends SupportMapFragment {
@@ -95,7 +94,8 @@ public class MapFragment extends SupportMapFragment {
     }
 
     private void showBottomSheet(LocationModel location) {
-        Snackbar.make(getView(), location.getLatitude() + "/" + location.getLongitude(), Snackbar.LENGTH_SHORT).show();
+        LocationDetailDialog dialog = new LocationDetailDialog(location);
+        dialog.show(getFragmentManager(), LocationDetailDialog.class.getName());
     }
 
     private void attachArrowClickListeners(View view) {

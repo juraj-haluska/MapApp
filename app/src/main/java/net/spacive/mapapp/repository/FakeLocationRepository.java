@@ -6,6 +6,8 @@ import androidx.lifecycle.MutableLiveData;
 import net.spacive.mapapp.model.LocationModel;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class FakeLocationRepository implements LocationRepository {
@@ -19,13 +21,13 @@ public class FakeLocationRepository implements LocationRepository {
 
     private FakeLocationRepository() {
 
-        currentLocation.setValue(new LocationModel(10, 10, 0, ""));
+        currentLocation.setValue(new LocationModel(10, 10, new Date(Calendar.getInstance().getTimeInMillis()), "", 5));
 
-        allLocations.add(new LocationModel(0, 0, 0, ""));
-        allLocations.add(new LocationModel(0, 1, 0, ""));
-        allLocations.add(new LocationModel(0, 2, 0, ""));
-        allLocations.add(new LocationModel(0, 3, 0, ""));
-        allLocations.add(new LocationModel(0, 4, 0, ""));
+        allLocations.add(new LocationModel(Double.MIN_NORMAL, 0, new Date(Calendar.getInstance().getTimeInMillis()), "", 5));
+        allLocations.add(new LocationModel(0, 1, new Date(Calendar.getInstance().getTimeInMillis()), "", 5));
+        allLocations.add(new LocationModel(0, 2, new Date(Calendar.getInstance().getTimeInMillis()), "",5 ));
+        allLocations.add(new LocationModel(0, 3, new Date(Calendar.getInstance().getTimeInMillis()), "", 5));
+        allLocations.add(new LocationModel(0, 4, new Date(Calendar.getInstance().getTimeInMillis()), "", 5));
 
         startDataStream();
     }
@@ -70,7 +72,7 @@ public class FakeLocationRepository implements LocationRepository {
                     e.printStackTrace();
                 }
 
-                LocationModel newModel = new LocationModel(i,i,0,"");
+                LocationModel newModel = new LocationModel(i,i,new Date(Calendar.getInstance().getTimeInMillis()),"zdroj: " + i, 5);
                 addLocation(newModel);
             }
             streamStarted = false;
