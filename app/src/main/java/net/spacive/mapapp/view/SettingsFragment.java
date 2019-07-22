@@ -15,7 +15,6 @@ import android.widget.SeekBar;
 import com.android.colorpicker.ColorPickerDialog;
 
 import net.spacive.mapapp.R;
-import net.spacive.mapapp.view.MainActivity;
 
 public class SettingsFragment extends Fragment {
 
