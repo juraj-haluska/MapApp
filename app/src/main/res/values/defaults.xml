@@ -2,5 +2,11 @@
 <resources>
     <integer name="default_line_width">10</integer>
     <color name="default_line_color">@color/red</color>
-    <integer name="default_sampling_rate">0</integer>
+    <integer name="default_sampling_rate_index">0</integer>
+    <integer-array name="sampling_rates">
+        <item>5000</item>
+        <item>30000</item>
+        <item>120000</item>
+        <item>300000</item>
+    </integer-array>
 </resources>

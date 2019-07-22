@@ -57,18 +57,23 @@ public class MainActivity extends AppCompatActivity {
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
-        int samplingRate = getSharedPreferences(
+        initLocationRequest();
+        initLocationCallback();
+        askForPermissions();
+    }
+
+    private void initLocationRequest() {
+        int samplingRateIndex = getSharedPreferences(
                 getString(R.string.prefs_key),
                 Context.MODE_PRIVATE)
                 .getInt(getString(R.string.prefs_key_rate),
-                        getResources().getInteger(R.integer.default_sampling_rate));
+                        getResources().getInteger(R.integer.default_sampling_rate_index));
+
+        int[] samplingRates = getResources().getIntArray(R.array.sampling_rates);
 
         locationRequest = new LocationRequest()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                .setInterval(samplingRate);
-
-        initLocationCallback();
-        askForPermissions();
+                .setInterval(samplingRates[samplingRateIndex]);
     }
 
     private void initLocationCallback() {
@@ -192,5 +197,11 @@ public class MainActivity extends AppCompatActivity {
         if (requestingLocationUpdates) {
             startLocationUpdates();
         }
+    }
+
+    public void updateLocationSamplingRate() {
+        stopLocationUpdates();
+        initLocationRequest();
+        startLocationUpdates();
     }
 }

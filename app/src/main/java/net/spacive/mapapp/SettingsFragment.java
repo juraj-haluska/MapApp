@@ -54,6 +54,9 @@ public class SettingsFragment extends Fragment {
                     shp.edit()
                             .putInt(getString(R.string.prefs_key_rate), i)
                             .apply();
+                    if (getActivity() instanceof MainActivity) {
+                        ((MainActivity) getActivity()).updateLocationSamplingRate();
+                    }
                 }
             }
         });
@@ -74,7 +77,7 @@ public class SettingsFragment extends Fragment {
 
         int selectedRate = shp.getInt(
                 getString(R.string.prefs_key_rate),
-                getResources().getInteger(R.integer.default_sampling_rate)
+                getResources().getInteger(R.integer.default_sampling_rate_index)
         );
 
         int checkedId = radioGroupRates.getChildAt(selectedRate).getId();
