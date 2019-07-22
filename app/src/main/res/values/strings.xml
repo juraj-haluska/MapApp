@@ -11,6 +11,14 @@
     <string name="title_accuracy">Accuracy:</string>
     <string name="title_source">Source:</string>
     <string name="title_colorpicker">Pick a color</string>
+    <string name="title_warning">Warning</string>
+    <string name="dialog_rationale">
+        Access to location data is essential
+        for this app to work. This app will not
+        work until access to location will be enabled.
+    </string>
+
+    <string name="action_ok">OK</string>
 
     <string name="postfix_meters">m</string>
 
