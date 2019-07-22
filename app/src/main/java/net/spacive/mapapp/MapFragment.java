@@ -1,5 +1,7 @@
 package net.spacive.mapapp;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -126,6 +128,8 @@ public class MapFragment extends SupportMapFragment {
                 polylineOptions.add(latLng);
             }
 
+            configurePolylineOptions(polylineOptions);
+
             polyline = googleMap.addPolyline(polylineOptions);
         } else {
             polyline.setPoints(latLngs);
@@ -151,5 +155,29 @@ public class MapFragment extends SupportMapFragment {
             CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(latLng);
             googleMap.moveCamera(cameraUpdate);
         }
+    }
+
+    private void configurePolylineOptions(PolylineOptions polylineOptions) {
+        // set polyline width
+        SharedPreferences shp = getContext().getSharedPreferences(
+                getString(R.string.prefs_key),
+                Context.MODE_PRIVATE);
+
+        int width = shp.getInt(
+                getString(R.string.prefs_key_width),
+                getResources().getInteger(R.integer.default_line_width));
+
+        float divider = getResources().getFloat(R.dimen.map_line_factor);
+        int bias = getResources().getInteger(R.integer.map_line_bias);
+
+        // map width values 0-100 from seekbar to 5-50
+        int lineWidth = (int)(width / divider + bias);
+
+        int color = shp.getInt(
+                getString(R.string.prefs_key_color),
+                getResources().getColor(R.color.default_line_color));
+
+        polylineOptions.width(lineWidth);
+        polylineOptions.color(color);
     }
 }
