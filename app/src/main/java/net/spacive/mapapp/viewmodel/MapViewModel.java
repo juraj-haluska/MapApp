@@ -1,11 +1,15 @@
 package net.spacive.mapapp.viewmodel;
 
+import android.app.Application;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
+import net.spacive.mapapp.MapApp;
 import net.spacive.mapapp.model.LocationModel;
-import net.spacive.mapapp.repository.FakeLocationRepository;
+import net.spacive.mapapp.repository.AppDatabase;
 import net.spacive.mapapp.repository.LocationRepository;
 import net.spacive.mapapp.util.Comparators;
 
@@ -13,17 +17,21 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class MapViewModel extends ViewModel {
+public class MapViewModel extends AndroidViewModel {
 
     private LocationRepository locationRepository;
 
     private MutableLiveData<LocationModel> focusedLocation;
 
-    public MapViewModel() {
-        locationRepository = FakeLocationRepository.getInstance();
+    public MapViewModel(@NonNull Application application) {
+        super(application);
 
+        AppDatabase db = ((MapApp) getApplication()).getAppDatabase();
+
+        locationRepository = db.locationDao();
         focusedLocation = new MutableLiveData<>();
     }
+
 
     public LiveData<List<LocationModel>> getLocations() {
         return locationRepository.getLocations();

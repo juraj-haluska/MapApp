@@ -76,4 +76,9 @@ public class FakeLocationRepository implements LocationRepository {
             }
         }.execute();
     }
+
+    @Override
+    public void insertLocation(LocationModel locationModel) {
+
+    }
 }
