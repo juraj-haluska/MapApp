@@ -2,4 +2,5 @@
 <resources>
     <integer name="default_line_width">10</integer>
     <color name="default_line_color">@color/red</color>
+    <integer name="default_sampling_rate">0</integer>
 </resources>

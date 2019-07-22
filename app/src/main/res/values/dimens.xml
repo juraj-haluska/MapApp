@@ -10,4 +10,6 @@
 
     <dimen name="map_line_factor">2.22</dimen>
     <integer name="map_line_bias">5</integer>
+
+    <integer name="palette_columns">4</integer>
 </resources>

@@ -1,6 +1,7 @@
 package net.spacive.mapapp;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
@@ -56,9 +57,15 @@ public class MainActivity extends AppCompatActivity {
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
+        int samplingRate = getSharedPreferences(
+                getString(R.string.prefs_key),
+                Context.MODE_PRIVATE)
+                .getInt(getString(R.string.prefs_key_rate),
+                        getResources().getInteger(R.integer.default_sampling_rate));
+
         locationRequest = new LocationRequest()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                .setInterval(3000);
+                .setInterval(samplingRate);
 
         initLocationCallback();
         askForPermissions();

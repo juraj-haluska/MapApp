@@ -75,9 +75,9 @@
 
             <View
                 android:id="@+id/view_line"
-                android:layout_marginLeft="16dp"
                 android:layout_width="64dp"
                 android:layout_height="4dp"
+                android:layout_marginLeft="16dp"
                 android:background="@color/red" />
 
         </LinearLayout>
@@ -112,10 +112,45 @@
                     android:textColor="@android:color/primary_text_light"
                     android:textSize="18sp" />
 
-                <TextView
+                <RadioGroup
+                    android:id="@+id/radio_rates"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="5s" />
+                    android:layout_marginTop="4dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/radio_5s"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/setting_sampling_5s"/>
+
+
+                    <RadioButton
+                        android:id="@+id/radio_30s"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/setting_sampling_30s"/>
+
+
+                    <RadioButton
+                        android:id="@+id/radio_2m"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/setting_sampling_2m"/>
+
+
+                    <RadioButton
+                        android:id="@+id/radio_5m"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/setting_sampling_5m"/>
+
+                </RadioGroup>
 
             </LinearLayout>
 

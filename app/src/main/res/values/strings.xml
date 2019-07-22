@@ -3,6 +3,7 @@
     <string name="prefs_key">NET.SPACIVE.MAPAPP.PREFERENCES</string>
     <string name="prefs_key_width">LINE_WIDTH</string>
     <string name="prefs_key_color">LINE_COLOR</string>
+    <string name="prefs_key_rate">SAMPLING_RATE</string>
 
     <string name="title_map">Map</string>
     <string name="title_stats">Statistics</string>
@@ -25,6 +26,11 @@
     <string name="setting_line_width">Line width</string>
     <string name="setting_line_color">Line color</string>
     <string name="setting_sampling">Location sampling period</string>
+
+    <string name="setting_sampling_5s">5s</string>
+    <string name="setting_sampling_30s">30s</string>
+    <string name="setting_sampling_2m">2m</string>
+    <string name="setting_sampling_5m">5m</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
