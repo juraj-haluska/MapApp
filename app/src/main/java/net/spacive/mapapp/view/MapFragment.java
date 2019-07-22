@@ -1,4 +1,4 @@
-package net.spacive.mapapp;
+package net.spacive.mapapp.view;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -20,6 +20,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import net.spacive.mapapp.R;
 import net.spacive.mapapp.model.LocationModel;
 import net.spacive.mapapp.view.LocationDetailDialog;
 import net.spacive.mapapp.viewmodel.LocationDetailViewModel;

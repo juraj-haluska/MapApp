@@ -19,8 +19,8 @@ public class FakeLocationRepository implements LocationRepository {
 
     private boolean streamStarted = false;
 
-    private List<LocationModel> locationCollection = new ArrayList<>();
-    private MutableLiveData<List<LocationModel>> locations = new MutableLiveData<>();
+    private final List<LocationModel> locationCollection = new ArrayList<>();
+    private final MutableLiveData<List<LocationModel>> locations = new MutableLiveData<>();
 
     private FakeLocationRepository() {
         locations.setValue(locationCollection);

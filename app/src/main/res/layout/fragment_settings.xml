@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SettingsFragment">
+    tools:context=".view.SettingsFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingTop="16dp"
         android:paddingBottom="16dp">
@@ -85,7 +85,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/cardview_shadow_start_color" />
+            android:background="@color/divider" />
 
         <LinearLayout
             android:layout_width="match_parent"

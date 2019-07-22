@@ -1,4 +1,4 @@
-package net.spacive.mapapp;
+package net.spacive.mapapp.view;
 
 import android.os.Bundle;
 
@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import net.spacive.mapapp.MapApp;
+import net.spacive.mapapp.R;
 import net.spacive.mapapp.repository.LocationRepository;
 
 public class StatsFragment extends Fragment {
@@ -22,7 +24,7 @@ public class StatsFragment extends Fragment {
             LocationRepository repo = ((MapApp) getActivity().getApplication())
                     .getAppDatabase().locationDao();
 
-            new Thread(() -> repo.clearData()).start();
+            new Thread(repo::clearData).start();
         });
 
         return view;

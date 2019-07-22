@@ -1,4 +1,4 @@
-package net.spacive.mapapp;
+package net.spacive.mapapp.view;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -13,6 +13,9 @@ import android.widget.RadioGroup;
 import android.widget.SeekBar;
 
 import com.android.colorpicker.ColorPickerDialog;
+
+import net.spacive.mapapp.R;
+import net.spacive.mapapp.view.MainActivity;
 
 public class SettingsFragment extends Fragment {
 

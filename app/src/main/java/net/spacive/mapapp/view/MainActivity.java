@@ -1,4 +1,4 @@
-package net.spacive.mapapp;
+package net.spacive.mapapp.view;
 
 import android.Manifest;
 import android.content.Context;
@@ -28,6 +28,8 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
+import net.spacive.mapapp.MapApp;
+import net.spacive.mapapp.R;
 import net.spacive.mapapp.model.LocationModel;
 import net.spacive.mapapp.repository.LocationRepository;
 

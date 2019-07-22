@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
 
+    <color name="divider">#37000000</color>
+
     <color name="red">#F6402C</color>
     <color name="pink">#EB1460</color>
     <color name="purple">#9C1AB1</color>

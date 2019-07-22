@@ -23,9 +23,9 @@ import java.util.List;
 
 public class MapViewModel extends AndroidViewModel {
 
-    private LocationRepository locationRepository;
-    private MutableLiveData<LocationModel> focusedLocation;
-    private float filterRadius;
+    private final LocationRepository locationRepository;
+    private final MutableLiveData<LocationModel> focusedLocation;
+    private final float filterRadius;
 
     public MapViewModel(@NonNull Application application) {
         super(application);

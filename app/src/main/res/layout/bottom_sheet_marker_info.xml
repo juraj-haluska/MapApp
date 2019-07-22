@@ -4,9 +4,8 @@
         <variable name="location" type="net.spacive.mapapp.model.LocationModel"/>
         <variable name="format" type="java.text.Format"/>
     </data>
-    <LinearLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+
+    <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

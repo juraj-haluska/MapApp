@@ -23,9 +23,6 @@ import java.text.Format;
 
 public class LocationDetailDialog extends BottomSheetDialogFragment {
 
-    private LocationModel locationModel;
-    private Format timeFormat;
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -36,9 +33,9 @@ public class LocationDetailDialog extends BottomSheetDialogFragment {
                 false);
 
         LocationDetailViewModel viewModel = ViewModelProviders.of(getActivity()).get(LocationDetailViewModel.class);
-        locationModel = viewModel.getLocationModel();
+        LocationModel locationModel = viewModel.getLocationModel();
 
-        timeFormat = getTimeFormat(getContext());
+        Format timeFormat = getTimeFormat(getContext());
 
         binding.setLocation(locationModel);
         binding.setFormat(timeFormat);

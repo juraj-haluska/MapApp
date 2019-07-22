@@ -6,7 +6,7 @@
     app:startDestination="@id/mapFragment">
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="net.spacive.mapapp.SettingsFragment"
+        android:name="net.spacive.mapapp.view.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings">
         <action
@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/statsFragment"
-        android:name="net.spacive.mapapp.StatsFragment"
+        android:name="net.spacive.mapapp.view.StatsFragment"
         android:label="fragment_stats"
         tools:layout="@layout/fragment_stats" >
         <action
@@ -30,7 +30,7 @@
     </fragment>
     <fragment
         android:id="@+id/mapFragment"
-        android:name="net.spacive.mapapp.MapFragment">
+        android:name="net.spacive.mapapp.view.MapFragment">
         <action
             android:id="@+id/action_mapFragment_to_statsFragment"
             app:destination="@id/statsFragment" />
