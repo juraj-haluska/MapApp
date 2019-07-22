@@ -32,8 +32,7 @@
     <string name="setting_sampling_2m">2m</string>
     <string name="setting_sampling_5m">5m</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="button_clear_data">Clear data</string>
 
     <!-- Default title for color picker dialog [CHAR LIMIT=30] -->
     <string name="color_picker_default_title">Select a Color</string>

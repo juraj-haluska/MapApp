@@ -12,4 +12,6 @@ public interface LocationRepository {
     List<LocationModel> getLocationsSync();
 
     void insertLocation(LocationModel locationModel);
+
+    void clearData();
 }

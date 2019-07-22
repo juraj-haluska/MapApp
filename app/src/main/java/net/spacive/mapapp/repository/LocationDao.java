@@ -11,12 +11,19 @@ import java.util.List;
 
 @Dao
 public interface LocationDao extends LocationRepository{
+    @Override
     @Query("SELECT * FROM locations")
     LiveData<List<LocationModel>> getLocations();
 
+    @Override
     @Query("SELECT * FROM locations")
     List<LocationModel> getLocationsSync();
 
+    @Override
     @Insert
     void insertLocation(LocationModel locationModel);
+
+    @Override
+    @Query("DELETE FROM locations")
+    void clearData();
 }
