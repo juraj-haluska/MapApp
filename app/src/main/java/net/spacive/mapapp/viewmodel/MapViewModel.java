@@ -2,6 +2,7 @@ package net.spacive.mapapp.viewmodel;
 
 import android.app.Application;
 import android.location.Location;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -34,6 +35,8 @@ public class MapViewModel extends AndroidViewModel {
 
         filterRadius = getApplication().getResources().getFloat(R.dimen.filter_radius);
 
+        Log.d("BAA", Float.toString(filterRadius));
+
         locationRepository = db.locationDao();
         focusedLocation = new MutableLiveData<>();
     }
@@ -49,20 +52,24 @@ public class MapViewModel extends AndroidViewModel {
             filteredLocations.add(input.get(0));
 
             // filter data with constant radius in meters
+            double prevLat = input.get(0).getLatitude();
+            double prevLng = input.get(0).getLongitude();
+
             for (int i = 1; i < input.size(); i++) {
-                LocationModel prevLocation = input.get(i - 1);
                 LocationModel currentLocation = input.get(i);
 
                 float[] results = new float[1];
                 Location.distanceBetween(
-                        prevLocation.getLatitude(),
-                        prevLocation.getLongitude(),
+                        prevLat,
+                        prevLng,
                         currentLocation.getLatitude(),
                         currentLocation.getLongitude(),
                         results
                 );
 
                 if (results[0] > filterRadius) {
+                    prevLat = currentLocation.getLatitude();
+                    prevLng = currentLocation.getLongitude();
                     filteredLocations.add(currentLocation);
                 }
             }
