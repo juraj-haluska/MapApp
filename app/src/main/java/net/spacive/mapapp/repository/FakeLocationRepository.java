@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 public class FakeLocationRepository implements LocationRepository {
 
@@ -22,15 +23,7 @@ public class FakeLocationRepository implements LocationRepository {
     private MutableLiveData<List<LocationModel>> locations = new MutableLiveData<>();
 
     private FakeLocationRepository() {
-
-        locationCollection.add(new LocationModel(Double.MIN_NORMAL, 0, new Date(Calendar.getInstance().getTimeInMillis()), "", 5));
-        locationCollection.add(new LocationModel(0, 1, new Date(Calendar.getInstance().getTimeInMillis()), "", 5));
-        locationCollection.add(new LocationModel(0, 2, new Date(Calendar.getInstance().getTimeInMillis()), "", 5));
-        locationCollection.add(new LocationModel(0, 3, new Date(Calendar.getInstance().getTimeInMillis()), "", 5));
-        locationCollection.add(new LocationModel(0, 4, new Date(Calendar.getInstance().getTimeInMillis()), "", 5));
-
         locations.setValue(locationCollection);
-
         startDataStream();
     }
 
@@ -57,15 +50,16 @@ public class FakeLocationRepository implements LocationRepository {
         new AsyncTask<Void, LocationModel, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
-                for (int i = 0; i < 20; i++) {
+                Random r = new Random();
+                for (int i = 0; i < 10000; i++) {
                     try {
                         Thread.sleep(1000);
                         LocationModel newModel = new LocationModel(
-                                i,
-                                i,
+                                r.nextDouble() * 90,
+                                r.nextDouble() * 180,
                                 new Date(Calendar.getInstance().getTimeInMillis()),
-                                "zdroj: " + i,
-                                5
+                                "zdroj: " + r.nextInt(),
+                                r.nextInt()
                         );
                         publishProgress(newModel);
                     } catch (InterruptedException e) {
