@@ -35,7 +35,6 @@ public class MapFragment extends SupportMapFragment {
     private List<Marker> markers = new ArrayList<>();
     private Polyline polyline;
 
-
     @Override
     public View onCreateView(LayoutInflater layoutInflater, ViewGroup viewGroup, Bundle bundle) {
         View mapView = super.onCreateView(layoutInflater, viewGroup, bundle);
@@ -101,21 +100,23 @@ public class MapFragment extends SupportMapFragment {
     }
 
     private void updateMarkers(List<LocationModel> locations) {
-        for (LocationModel locationModel : locations) {
-            // check if marker of this location is in map
-            boolean contains = false;
-            for (Marker marker : markers) {
-                if (locationModel.getLatLng().equals(marker.getPosition())) {
-                    contains = true;
-                }
-            }
+        // remove old markers
+        for (Marker marker : markers) {
+            marker.remove();
+        }
 
-            if (!contains) {
-                MarkerOptions options = new MarkerOptions().position(locationModel.getLatLng());
-                Marker marker = googleMap.addMarker(options);
-                marker.setTag(locationModel);
-                markers.add(marker);
-            }
+        markers = new ArrayList<>();
+
+        for (LocationModel locationModel : locations) {
+            MarkerOptions options = new MarkerOptions().position(locationModel.getLatLng());
+            Marker marker = googleMap.addMarker(options);
+            marker.setTag(locationModel);
+            markers.add(marker);
+        }
+
+        if (!locations.isEmpty()) {
+            changeFocusToLocation(locations.get(locations.size() - 1));
+            googleMap.moveCamera(CameraUpdateFactory.zoomTo(18));
         }
     }
 
@@ -171,7 +172,7 @@ public class MapFragment extends SupportMapFragment {
         int bias = getResources().getInteger(R.integer.map_line_bias);
 
         // map width values 0-100 from seekbar to 5-50
-        int lineWidth = (int)(width / divider + bias);
+        int lineWidth = (int) (width / divider + bias);
 
         int color = shp.getInt(
                 getString(R.string.prefs_key_color),
