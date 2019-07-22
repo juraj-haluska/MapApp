@@ -14,6 +14,9 @@ public interface LocationDao extends LocationRepository{
     @Query("SELECT * FROM locations")
     LiveData<List<LocationModel>> getLocations();
 
+    @Query("SELECT * FROM locations")
+    List<LocationModel> getLocationsSync();
+
     @Insert
     void insertLocation(LocationModel locationModel);
 }

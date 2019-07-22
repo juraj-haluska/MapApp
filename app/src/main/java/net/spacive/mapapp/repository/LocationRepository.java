@@ -9,5 +9,7 @@ import java.util.List;
 public interface LocationRepository {
     LiveData<List<LocationModel>> getLocations();
 
+    List<LocationModel> getLocationsSync();
+
     void insertLocation(LocationModel locationModel);
 }

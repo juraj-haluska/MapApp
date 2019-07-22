@@ -42,30 +42,51 @@ public class MapViewModel extends AndroidViewModel {
     }
 
     public void setMostEasternPosition() {
-        Comparator<LocationModel> comparator = Comparators.getLocationComparator(LocationModel::getLongitude);
-        LocationModel mostEastern = Collections.max(locationRepository.getLocations().getValue(), comparator);
+        new Thread(() -> {
+            List<LocationModel> locations = locationRepository.getLocationsSync();
+            if (locations != null && !locations.isEmpty()) {
+                Comparator<LocationModel> comparator = Comparators.getLocationComparator(LocationModel::getLongitude);
+                LocationModel mostEastern = Collections.max(locationRepository.getLocationsSync(), comparator);
 
-        focusedLocation.setValue(mostEastern);
+                focusedLocation.postValue(mostEastern);
+            }
+        }).start();
     }
 
     public void setMostWesternPosition() {
-        Comparator<LocationModel> comparator = Comparators.getLocationComparator(LocationModel::getLongitude);
-        LocationModel mostWestern = Collections.min(locationRepository.getLocations().getValue(), comparator);
+        new Thread(() -> {
+            List<LocationModel> locations = locationRepository.getLocationsSync();
+            if (locations != null && !locations.isEmpty()) {
+                Comparator<LocationModel> comparator = Comparators.getLocationComparator(LocationModel::getLongitude);
+                LocationModel mostWestern = Collections.min(locationRepository.getLocationsSync(), comparator);
 
-        focusedLocation.setValue(mostWestern);
+                focusedLocation.postValue(mostWestern);
+            }
+        }).start();
     }
 
     public void setMostNorthernPosition() {
-        Comparator<LocationModel> comparator = Comparators.getLocationComparator(LocationModel::getLatitude);
-        LocationModel mostNorthern = Collections.max(locationRepository.getLocations().getValue(), comparator);
+        new Thread(() -> {
+            List<LocationModel> locations = locationRepository.getLocationsSync();
+            if (locations != null && !locations.isEmpty()) {
 
-        focusedLocation.setValue(mostNorthern);
+                Comparator<LocationModel> comparator = Comparators.getLocationComparator(LocationModel::getLatitude);
+                LocationModel mostNorthern = Collections.max(locationRepository.getLocationsSync(), comparator);
+
+                focusedLocation.postValue(mostNorthern);
+            }
+        }).start();
     }
 
     public void setMostSouthernPosition() {
-        Comparator<LocationModel> comparator = Comparators.getLocationComparator(LocationModel::getLatitude);
-        LocationModel mostSouthern = Collections.min(locationRepository.getLocations().getValue(), comparator);
+        new Thread(() -> {
+            List<LocationModel> locations = locationRepository.getLocationsSync();
+            if (locations != null && !locations.isEmpty()) {
+                Comparator<LocationModel> comparator = Comparators.getLocationComparator(LocationModel::getLatitude);
+                LocationModel mostSouthern = Collections.min(locationRepository.getLocationsSync(), comparator);
 
-        focusedLocation.setValue(mostSouthern);
+                focusedLocation.postValue(mostSouthern);
+            }
+        }).start();
     }
 }

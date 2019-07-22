@@ -81,4 +81,9 @@ public class FakeLocationRepository implements LocationRepository {
     public void insertLocation(LocationModel locationModel) {
 
     }
+
+    @Override
+    public List<LocationModel> getLocationsSync() {
+        return new ArrayList<>();
+    }
 }
