@@ -30,6 +30,8 @@ import java.util.List;
 
 public class MapFragment extends SupportMapFragment {
 
+    public static final float DEFAULT_ZOOM = 18f;
+
     private GoogleMap googleMap;
     private MapViewModel viewModel;
     private List<Marker> markers = new ArrayList<>();
@@ -71,6 +73,8 @@ public class MapFragment extends SupportMapFragment {
         setMarkerClickListener();
 
         viewModel = ViewModelProviders.of(getActivity()).get(MapViewModel.class);
+
+        googleMap.moveCamera(CameraUpdateFactory.zoomTo(DEFAULT_ZOOM));
 
         viewModel.getLocations().observe(getViewLifecycleOwner(), this::updateLocations);
         viewModel.getFocusedLocation().observe(getViewLifecycleOwner(), this::changeFocusToLocation);
@@ -116,7 +120,6 @@ public class MapFragment extends SupportMapFragment {
 
         if (!locations.isEmpty()) {
             changeFocusToLocation(locations.get(locations.size() - 1));
-            googleMap.moveCamera(CameraUpdateFactory.zoomTo(18));
         }
     }
 
