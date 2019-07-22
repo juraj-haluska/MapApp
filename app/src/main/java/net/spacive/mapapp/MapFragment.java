@@ -30,12 +30,11 @@ import java.util.List;
 
 public class MapFragment extends SupportMapFragment {
 
-    public static final float DEFAULT_ZOOM = 18f;
-
     private GoogleMap googleMap;
     private MapViewModel viewModel;
     private List<Marker> markers = new ArrayList<>();
     private Polyline polyline;
+    private float zoom;
 
     @Override
     public View onCreateView(LayoutInflater layoutInflater, ViewGroup viewGroup, Bundle bundle) {
@@ -52,6 +51,8 @@ public class MapFragment extends SupportMapFragment {
                         RelativeLayout.LayoutParams.WRAP_CONTENT);
         arrowLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, 1);
         arrowLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, 1);
+
+        zoom = getResources().getFloat(R.dimen.map_zoom);
 
         View arrows = layoutInflater.inflate(R.layout.layout_arrows, viewGroup, false);
         view.addView(arrows, arrowLayoutParams);
@@ -74,7 +75,7 @@ public class MapFragment extends SupportMapFragment {
 
         viewModel = ViewModelProviders.of(getActivity()).get(MapViewModel.class);
 
-        googleMap.moveCamera(CameraUpdateFactory.zoomTo(DEFAULT_ZOOM));
+        googleMap.moveCamera(CameraUpdateFactory.zoomTo(zoom));
 
         viewModel.getLocations().observe(getViewLifecycleOwner(), this::updateLocations);
         viewModel.getFocusedLocation().observe(getViewLifecycleOwner(), this::changeFocusToLocation);

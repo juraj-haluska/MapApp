@@ -12,4 +12,10 @@
     <integer name="map_line_bias">5</integer>
 
     <integer name="palette_columns">4</integer>
+
+    <!-- filter - locations in this radius are considered the same -->
+    <dimen name="filter_radius">10.0</dimen>
+
+    <!-- map zoom -->
+    <dimen name="map_zoom">18</dimen>
 </resources>

@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
 import net.spacive.mapapp.MapApp;
+import net.spacive.mapapp.R;
 import net.spacive.mapapp.model.LocationModel;
 import net.spacive.mapapp.repository.AppDatabase;
 import net.spacive.mapapp.repository.LocationRepository;
@@ -22,16 +23,16 @@ import java.util.List;
 
 public class MapViewModel extends AndroidViewModel {
 
-    // in meters
-    public static final float FILTER_RADIUS = 10f;
-
     private LocationRepository locationRepository;
     private MutableLiveData<LocationModel> focusedLocation;
+    private float filterRadius;
 
     public MapViewModel(@NonNull Application application) {
         super(application);
 
         AppDatabase db = ((MapApp) getApplication()).getAppDatabase();
+
+        filterRadius = getApplication().getResources().getFloat(R.dimen.filter_radius);
 
         locationRepository = db.locationDao();
         focusedLocation = new MutableLiveData<>();
@@ -61,7 +62,7 @@ public class MapViewModel extends AndroidViewModel {
                         results
                 );
 
-                if (results[0] > FILTER_RADIUS) {
+                if (results[0] > filterRadius) {
                     filteredLocations.add(currentLocation);
                 }
             }
